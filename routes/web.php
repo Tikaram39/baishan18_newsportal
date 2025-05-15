@@ -3,13 +3,19 @@
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+// Frontend Routes
+Route::get('/', [PageController::class, 'home'])->name('home');
+
+
+// Admin Routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
