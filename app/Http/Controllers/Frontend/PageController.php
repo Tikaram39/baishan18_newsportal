@@ -3,23 +3,38 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\View;
 
-class PageController extends Controller
+class PageController extends BaseController
 {
     public function home()
     {
-        $company = Company::first();
+        $latest_articles = Article::orderBy('id', 'desc')->where('status', 'approved')->limit(5)->get();
 
-        $categories = Category::where('status', true)->get();
+        $trending_articles = Article::orderBy('views', 'desc')->where('status', 'approved')->limit(8)->get();
+        return view('frontend.home', compact('latest_articles', 'trending_articles'));
+    }
 
-        View::share([
-            'company' => $company,
-            'categories' => $categories
-        ]);
-        return view('frontend.home');
+    public function category($slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+        $articles = $category->articles()->where('status', 'approved')->paginate(1);
+        return view('frontend.category', compact('articles', 'category'));
+    }
+
+    public function article($id)
+    {
+        $article = Article::find($id);
+        $data = Cookie::get("article$id");
+        if (!$data) {
+            $article->increment('views');
+            Cookie::queue("article$id", $id);
+        }
+        return view('frontend.article', compact('article'));
     }
 }

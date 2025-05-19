@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 // Frontend Routes
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/category/{slug}', [PageController::class, 'category'])->name('category');
+Route::get('/article/{id}', [PageController::class, 'article'])->name('article');
 
 
 // Admin Routes

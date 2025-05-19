@@ -1,4 +1,4 @@
-<header>
+<header class="sticky top-0 z-50 bg-white">
     <div class="container py-4 flex justify-between items-center">
         <div>
             <img class="h-[40px] md:h-[80px]" src="{{ asset($company->logo) }}" alt="">
@@ -18,7 +18,7 @@
                 @foreach ($categories as $index => $cat)
                     @if ($index < 7)
                         <li>
-                            <a href="">{{ $cat->title }}</a>
+                            <a href="{{ route('category', $cat->slug) }}">{{ $cat->title }}</a>
                         </li>
                     @endif
                 @endforeach
@@ -38,7 +38,7 @@
                             @foreach ($categories as $index => $cat)
                                 @if ($index >= 7)
                                     <li>
-                                        <a href="#"
+                                        <a href="{{ route('category', $cat->slug) }}"
                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $cat->title }}</a>
                                     </li>
                                 @endif
