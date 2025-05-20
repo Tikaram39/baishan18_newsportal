@@ -1,4 +1,4 @@
-<x-frontend-layout>
+<x-frontend-layout :title="'Home'" :description="'This is home page'" :keywords="'Jawaaf News, Jawaaf, Jawaaf.com'">
     <section>
         <div class="container py-10 grid md:grid-cols-3 gap-5">
             <div class="md:col-span-2">
