@@ -58,4 +58,51 @@ class ApiController extends Controller
             'message' => 'Category created successfully'
         ]);
     }
+
+    public function category_update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Category doesnot exist'
+            ], 404);
+        }
+        $category->title = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->meta_keywords = $request->meta_keywords;
+        $category->meta_description = $request->meta_description;
+        $category->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully'
+        ]);
+    }
+
+    public function category_delete($id)
+    {
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Category doesnot exist'
+            ], 404);
+        }
+        $category->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Category deleted successfully'
+        ]);
+    }
 }
