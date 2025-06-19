@@ -19,7 +19,7 @@ class CompanyResource extends JsonResource
             'name' => $this->name,
             'address' => $this->address,
             'email' => $this->email,
-            'logo' =>asset($this->logo),
+            'logo' => asset($this->logo),
         ];
     }
 }
